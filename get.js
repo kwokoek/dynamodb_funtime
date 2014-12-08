@@ -1,28 +1,28 @@
 // Try the get call on a specific key
 // Scan all as a follow up
 //
-var dynaBase = require('./dynaBase.js');
-var docClient = dynaBase.docClient;
+var dynamo_setup= require('./lib/dynamo_setup.js');
+var readDynamo = require('./lib/dynamo_read.js');
 
-var params = {
-  TableName : dynaBase.tableName,
-  Key : { 
-    "pid" : "1234" ,
-    "state" : "inprogress" ,
-  }
+var key = { 
+  "pid" : "1234" ,
+  "state" : "inprogress" ,
 }
 
-console.log("Get id",params.Key,"from table",params.TableName);
-docClient.getItem(params, function(err, data) {
+var dynamo = dynamo_setup.dynamo;
+// can override values here
+
+console.log("DY",dynamo);
+readDynamo.getItem(dynamo,key, function(err, data) {
   if (err) {
     console.log("ERR",err); // an error occurred
   } else {
     console.log("RESULT",JSON.stringify(data)); // successful response
   }
 
-  getALL();
 });
 
+/*
 function getALL() {
   console.log("ALL");
   params = {
@@ -40,3 +40,4 @@ function getALL() {
   });
 
   }
+ */

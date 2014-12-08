@@ -1,11 +1,8 @@
-var AWS = require('aws-sdk'); 
-
-AWS.config.update({ accessKeyId: "myKeyId", secretAccessKey: "secretKey", region: "us-west-2" })
-var dynamodb = new AWS.DynamoDB({ endpoint: new AWS.Endpoint('http://localhost:8000') });
+var dynaBase = require('./dynaBase.js');
 
 // make a hash + range primary key
 var params = {
-    TableName: 'tester',
+    TableName: dynaBase.tableName,
     KeySchema: [
         { AttributeName: 'pid', KeyType: 'HASH' },
         { AttributeName: 'state', KeyType: 'RANGE' },
@@ -20,8 +17,8 @@ var params = {
     }
 };
 
-console.log("Creating table");
-dynamodb.createTable(params, function(err, data) {
+console.log("Creating table:",params.TableName);
+dynaBase.dynamodb.createTable(params, function(err, data) {
   if (err){
     console.log("ERR",err); // an error occurred
     return;
@@ -33,7 +30,7 @@ dynamodb.createTable(params, function(err, data) {
   params = {
       TableName: 'tester'
   };
-  dynamodb.describeTable(params, function(err, data) {
+  dynaBase.dynamodb.describeTable(params, function(err, data) {
       if (err) console.log(err, err.stack); // an error occurred
         else     console.log(data);           // successful response
   });

@@ -1,19 +1,15 @@
 // Query just on the hash key
 //
-var AWS = require('aws-sdk'); 
-var DOC = require("dynamodb-doc");
-
-
-AWS.config.update({ accessKeyId: "myKeyId", secretAccessKey: "secretKey", region: "us-west-2" })
-var dynamodb = new AWS.DynamoDB({ endpoint: new AWS.Endpoint('http://localhost:8000') });
-var docClient = new DOC.DynamoDB(dynamodb);
+var dynaBase = require('./dynaBase.js');
+var docClient = dynaBase.docClient;
 
 // We should get 2 hits on this query response
 var params = {
-    TableName : 'tester',
-    KeyConditions: docClient.Condition("pid", "EQ", "1234"),
-  }
+  TableName : dynaBase.tableName,
+  KeyConditions: docClient.Condition("pid", "EQ", "1234"),
+}
 
+console.log("Query for",params.KeyConditions,"on table",params.TableName);
 docClient.query(params).eachPage(function(err, data) {
   if (err) {
     console.log("ERR",err); // an error occurred

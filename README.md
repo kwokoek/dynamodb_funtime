@@ -4,7 +4,7 @@ Trying out the javascript apis with dynamodb
 [Amazon has great documentation for dynamodb here.](http://aws.amazon.com/dynamodb/)
 
 
-## Setup
+### Setup
 Build the node packages for the aws sdks for the local testing.
 
 ``` npm install ```

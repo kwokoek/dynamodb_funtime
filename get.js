@@ -12,32 +12,30 @@ var key = {
 var dynamo = dynamo_setup.dynamo;
 // can override values here
 
-console.log("DY",dynamo);
 readDynamo.getItem(dynamo,key, function(err, data) {
   if (err) {
     console.log("ERR",err); // an error occurred
   } else {
     console.log("RESULT",JSON.stringify(data)); // successful response
   }
+  step2();
 
 });
 
-/*
-function getALL() {
-  console.log("ALL");
-  params = {
-    TableName: dynaBase.tableName,
-    Limit: 5  // Limits the number of results per page (beyond the default 1MB limit)
-  };
 
-  docClient.scan(params, function(err, data) {
+// handle async for test, wrap up in function
+function step2() {
+  readDynamo.getAll(dynamo, function(err, data) {
     if (err) {
-      console.log(err); // an error occurred
-    } else {
-      console.log("The Scan call evaluated " + data.ScannedCount + " items");
-      console.log(JSON.stringify(data)); 
+      return console.log(err); // an error occurred
+    } 
+
+    if(data.ScannedCount > 0) {
+      for(var idx in data.Items) {
+        console.log("Item[",idx,"] = ",JSON.stringify(data.Items[idx]));
+      }
     }
+    
   });
 
-  }
- */
+}

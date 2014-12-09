@@ -1,7 +1,7 @@
-var dynamo_setup= require('./lib/dynamo_setup.js');
-var readDynamo = require('./lib/dynamo_read.js');
+var dynamoSetup= require('./lib/dynamo_setup.js');
+var dynamoHelper = require('./lib/dynamo_helper.js');
 
-var dynamo = dynamo_setup.dynamo;
+var dynamo = dynamoSetup.dynamo;
 
 var params_name_scan = {
     'ExpressionAttributeValues' : { ':s' : 'two' },
@@ -29,7 +29,7 @@ var params = {
       'AND #sess.Q1.answered_at = :p',
 };
 
-readDynamo.scan(dynamo,params,function(err,data) {
+dynamoHelper.scan(dynamo,params,function(err,data) {
   if (err) {
       console.log(err); // an error occurred
   } else if (data) {

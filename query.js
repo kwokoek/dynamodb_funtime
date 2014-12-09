@@ -1,21 +1,36 @@
 // Query just on the hash key
 //
-var dynaBase = require('./dynaBase.js');
-var docClient = dynaBase.docClient;
+var dynamo_setup= require('./lib/dynamo_setup.js');
+var readDynamo = require('./lib/dynamo_read.js');
+
+var dynamo = dynamo_setup.dynamo;
+
+var _=require('underscore');
 
 // We should get 2 hits on this query response
-var params = {
-  TableName : dynaBase.tableName,
-  KeyConditions: docClient.Condition("pid", "EQ", "1234"),
+var filters = {
+  KeyConditions: dynamo.dynamodb.Condition("pid", "EQ", "1234"),
 }
 
-console.log("Query for",params.KeyConditions,"on table",params.TableName);
-docClient.query(params).eachPage(function(err, data) {
-  if (err) {
-    console.log("ERR",err); // an error occurred
-  } else {
-    console.log("RESULT",JSON.stringify(data)); // successful response
-  }
-
+query(dynamo,filters,function(err,data) {
+      if(data.length > 0) {
+        for(var idx in data) {
+          console.log("Item[",idx,"] = ",JSON.stringify(data[idx]));
+        }
+      }
 });
 
+function query(dynamo,filters,callback) {
+  var params = {
+    TableName: dynamo.tableName
+  };
+  params = _.extend(params,filters);
+
+  var results = [];
+  dynamo.dynamodb.query(params).eachPage(function(err, data) {
+    if(data && data.Items) {
+      return _.extend(results,data.Items);
+    }
+    callback(err,results);
+  });
+}

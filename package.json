@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.0.30",
-    "dynamodb-doc": "git+ssh://git@github.com:awslabs/dynamodb-document-js-sdk.git"
+    "dynamodb-doc": "git+ssh://git@github.com:awslabs/dynamodb-document-js-sdk.git",
+    "underscore": "^1.7.0"
   }
 }

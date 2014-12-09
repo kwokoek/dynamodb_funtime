@@ -1,3 +1,4 @@
+// Creating the table is an admin operation
 var dynaBase = require('./dynaBase.js');
 
 // make a hash + range primary key

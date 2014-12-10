@@ -29,10 +29,13 @@ function step2() {
     if (err) {
       return console.log(err); // an error occurred
     } 
+    console.log("Get all returned row count:",data.length);
 
-    if(data.Items.length > 0) {
-      for(var idx in data.Items) {
-        console.log("Item[",idx,"] = ",JSON.stringify(data.Items[idx]));
+    return; // skip the item dump
+
+    if(data.length > 0) {
+      for(var idx in data) {
+        console.log("Item[",idx,"] = ",JSON.stringify(data[idx]));
       }
     }
     

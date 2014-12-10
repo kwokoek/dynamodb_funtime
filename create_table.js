@@ -35,14 +35,4 @@ dynamodb.createTable(params, function(err, data) {
   }
   else console.log(data); // successful response
 
-
-  // Try a describe call
-  params = {
-      TableName: 'tester'
-  };
-  dynamodb.describeTable(params, function(err, data) {
-      if (err) console.log(err, err.stack); // an error occurred
-        else     console.log(data);           // successful response
-  });
-
 });

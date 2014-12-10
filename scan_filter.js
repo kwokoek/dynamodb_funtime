@@ -29,16 +29,17 @@ var params = {
       'AND #sess.Q1.answered_at = :p',
 };
 
-dynamoHelper.scan(dynamo,params,function(err,data) {
+dynamoHelper.scan(dynamo,params_GT,function(err,data) {
   if (err) {
-      console.log(err); // an error occurred
+      console.log("Scan error",err); // an error occurred
   } else if (data) {
       var tests = [];
       for (var i = 0; i < data.Items.length; i++ ) {
-          console.log("TT",i,JSON.stringify(data.Items[i]));
+          //console.log("TT",i,JSON.stringify(data.Items[i]));
           tests.push(data.Items[i].Id);
       }
-      console.log(" "  + tests.join(", "));
+      //console.log(" "  + tests.join(", "));
+      console.log(" "  + tests.length);
   } else {
       console.log("*** Finished scan ***");
   }

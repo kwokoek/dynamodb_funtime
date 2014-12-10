@@ -10,6 +10,9 @@ var filters = {
 }
 
 dynamoHelper.query(dynamo,filters,function(err,data) {
+  console.log("Query results",data.length);
+
+  return; // just show len
   if(data.length > 0) {
     for(var idx in data) {
       console.log("Item[",idx,"] = ",JSON.stringify(data[idx]));
